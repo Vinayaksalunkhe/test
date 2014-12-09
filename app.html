@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <script>
+    // initial dataset
+    window.localStorage.people = window.localStorage.people || JSON.stringify([
+      {
+        id: 1,
+        firstName: "Jon",
+        lastName: "Jones",
+        email: "j@jones.com"
+      },
+      {
+        id: 2,
+        firstName: "Pete",
+        lastName: "Peterson",
+        email: "p@peterson.com"
+      }
+    ]);
+  </script>
+</body>
+</html>
