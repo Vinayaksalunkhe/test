@@ -1,0 +1,47 @@
+<div ng-app="myapp">
+    <div ng-controller="UserCtrl">
+        <!-- List users -->
+        <div id="user_list" class="listview_list">
+            <div id="user_row" class="listview_row" ng-repeat="u in users">
+                <div id="user_username" class="listview_column"><span class="listview_mainfield">{{u.email}}</span></div>
+                <div id="user_firstname" class="listview_column">{{u.firstName}}</div>
+                <div id="user_lastname" class="listview_column">{{u.lastName}}</div>
+                <button class="listview_button" ng-click="deleteUser(u.id, $index)">Delete</button>
+                <button class="listview_button" ng-click="showEditScreen(u.id, $index)">Edit</button>                
+            </div>
+            
+            <!-- Add new user button -->
+            <div id="user_new" class="new_user">
+                <button class="add_button" ng-click="showAddScreen()">Add user</button>
+            </div>
+
+            <!-- Show user modification screen (opens when clicking on to the "Add user" or "Edit" button) -->
+            <div id="user_mod" class="user_form" ng-show="userModScreenVisible">
+                <form name="mod_user" novalidate>
+                    <input type="email" name="email" ng-model="user.email" placeholder="E-Mail" ng-disabled="emailFieldDisabled" required email-available/>
+                    <div class="user-help" ng-show="mod_user.email.$dirty && mod_user.email.$invalid">Invalid:
+                        <span ng-show="mod_user.email.$error.required">Please enter your email.</span>
+                        <span ng-show="mod_user.email.$error.email">This is not a valid email.</span>
+                        <span ng-show="mod_user.email.$error.checkingEmail">Checking email...</span>
+                        <span ng-show="mod_user.email.$error.emailAvailable">Email not available</span>
+                    </div>
+                    <br/>
+                    <input name="firstName" ng-model="user.firstName" placeholder="Firstname" required/>
+                    <div class="user-help" ng-show="mod_user.firstName.$dirty && mod_user.firstName.$invalid">Invalid:
+                        <span ng-show="mod_user.firstName.$error.required">Please enter your firstname.</span>
+                    </div>
+                    <br/>
+                    <input name="lastName" ng-model="user.lastName" placeholder="Lastname" required/>
+                    <div class="user-help" ng-show="mod_user.lastName.$dirty && mod_user.lastName.$invalid">Invalid:
+                        <span ng-show="mod_user.lastName.$error.required">Please enter your lastname.</span>
+                    </div>
+                    <br/>
+                    
+                    <button class="button" ng-click="hideUserModScreen()">Close</button>
+                    <button class="button" ng-click="updateUser()" ng-disabled="mod_user.$invalid" ng-show="updateUserButtonVisible">Update</button>
+                    <button class="button" ng-click="saveUser()" ng-disabled="mod_user.$invalid" ng-show="saveUserButtonVisible">Save</button>
+                </form>
+            </div>            
+        </div>
+    </div>
+</div>
