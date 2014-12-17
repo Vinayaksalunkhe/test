@@ -1,0 +1,97 @@
+var $scope;
+var app = angular.module('myapp', ['myapp.directives']);
+
+function UserCtrl($scope) {
+
+$scope.users = [{id:"31546310-8a09-4887-9bca-7a719af0620e", firstName:"John", lastName:"Jones", email:"j@jones.com"}, {id:"62637e0b-c7e6-44c7-bd1e-8f6130eb648f", firstName:"Pete", lastName:"Peterson", email:"p@peterson.com"}];
+
+    $scope.userModScreenVisible = false;
+    $scope.updateUserButtonVisible = false;
+    $scope.saveUserButtonVisible = false; 
+    $scope.emailFieldDisabled = false;
+    $scope.showAddScreen = function() {
+
+        $scope.user = [{id:"", firstName:"", lastName:"", email:"",}];
+        $scope.saveUserButtonVisible = true;
+        $scope.userModScreenVisible = true;
+    }
+   
+    $scope.showEditScreen = function(id, index) {
+        $scope.user = $scope.users[index];
+        $scope.editIndex = index;
+        $scope.updateUserButtonVisible = true;
+        $scope.emailFieldDisabled = true;
+        $scope.userModScreenVisible = true;
+    }    
+
+    $scope.hideUserModScreen = function() {
+        $scope.updateUserButtonVisible = false;
+        $scope.saveUserButtonVisible = false;
+        $scope.emailFieldDisabled = false;
+        $scope.mod_user.$setPristine();
+        $scope.userModScreenVisible = false;
+    }
+
+    $scope.updateUser = function() {
+
+        angular.extend($scope.users[$scope.editIndex], $scope.user);
+        $scope.editIndex = null;
+        $scope.updateUserButtonVisible = false;
+        $scope.userModScreenVisible = false;
+        $scope.mod_user.$setPristine();
+    }
+
+    $scope.saveUser = function() {
+
+        $scope.users.push($scope.user);
+        $scope.saveUserButtonVisible = false;
+        $scope.userModScreenVisible = false;
+        $scope.mod_user.$setPristine();
+    }
+
+    $scope.deleteUser = function(id, index) {
+        $scope.users.splice(index, 1);
+        $scope.userModScreenVisible = false;
+    }    
+}
+
+angular.module('myapp.directives', []).
+
+    directive('emailAvailable', function($http) { // available
+        return {
+            require: 'ngModel',
+            link: function(scope, elem, attr, ctrl) {
+                ctrl.$parsers.push(function(viewValue) {
+
+                                      ctrl.$setValidity('emailAvailable', true);
+                    if(ctrl.$valid) {
+                        ctrl.$setValidity('checkingEmail', false);
+
+                                            if(viewValue !== "" && typeof viewValue !== "undefined") {
+                            ctrl.$setValidity('emailAvailable', true);
+                            ctrl.$setValidity('checkingEmail', true);
+                    
+                        } else {
+                            ctrl.$setValidity('emailAvailable', true);
+                            ctrl.$setValidity('checkingEmail', true);
+                        }
+                    }
+                    return viewValue;
+                });
+            }
+        };
+    }).
+
+    
+    directive('fieldEqual', [function() {
+        return {
+                                        } else {
+                                ctrl.$setValidity('fieldEqual', true);
+                                return viewValue;
+                            }
+                        });
+                    }
+                });
+            }
+        };
+    }]);
