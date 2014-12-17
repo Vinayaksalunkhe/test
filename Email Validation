@@ -1,0 +1,6 @@
+<form id="signup" method="post">
+    <input type="email" placeholder="Your e-mail." />
+    <button>Submit</button>
+</form>
+
+
